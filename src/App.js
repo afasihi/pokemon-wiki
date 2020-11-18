@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+
+import store from "./redux/store";
+import HomePage from "./Components/pages/HomePage";
+import PokemonPage from "./Components/pages/PokemonPage";
+import TypesPage from "./Components/pages/TypesPage";
+import Header from "./Components/layouts/Header";
+import Footer from "./Components/layouts/Footer";
+import NotFound from "./Components/pages/NotFound";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/pokemon/:name" component={PokemonPage} />
+            <Route path="/types/:type" component={TypesPage} />
+            <Route component={NotFound} />
+          </Switch>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
